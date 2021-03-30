@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.OrderDetailDao">
+    <insert id="addOrderDetail" parameterType="com.bean.OrderDetail">
+        insert into OrderDetail
+        values (null, #{hid}, #{uid}, #{nums}, #{price}, #{total}, '未同意租赁', #{wj}, #{username}, #{telephone}, #{idcard})
+    </insert>
+    <delete id="deleteOrderDetailByID" parameterType="int">
+        delete
+        from OrderDetail
+        where oid = #{oid}
+    </delete>
+    <select id="selectAllOrderDetail" resultType="com.pojo.OrderDetails">
+        select *
+        from OrderDetail,
+             House
+        where OrderDetail.hid = House.hid
+          and status1 = '未同意租赁'
+    </select>
+    <select id="selectAllOrderDetail1" resultType="com.pojo.OrderDetails">
+        select *
+        from OrderDetail,
+             House
+        where OrderDetail.hid = House.hid
+          and status1 = '同意租赁'
+    </select>
+    <update id="updateOrderDetail" parameterType="String">
+        update OrderDetail
+        set status1='同意租赁'
+        where wj = #{wj}
+    </update>
+</mapper>
